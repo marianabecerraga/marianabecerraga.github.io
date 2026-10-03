@@ -86,10 +86,18 @@
       else v.pause();
     });
   }, { threshold: 0.15 });
-  document.querySelectorAll('video[data-auto]').forEach(function (v) {
+  var visible = new Set();
+  var autoVids = document.querySelectorAll('video[data-auto]');
+  autoVids.forEach(function (v) {
     v.muted = true;
     vidObserver.observe(v);
+    new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) visible.add(v); else visible.delete(v); }); }).observe(v);
     if (reduce) v.setAttribute('controls', '');
+  });
+  /* browsers pause media in background tabs: resume what is on screen when the tab returns */
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden || reduce) return;
+    visible.forEach(function (v) { var p = v.play(); if (p && p.catch) p.catch(function () {}); });
   });
 
   /* ---------- 5. Motion: uniform grid, active piece opens to landscape ----------

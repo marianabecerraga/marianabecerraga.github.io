@@ -33,7 +33,7 @@ en 1–5 minutos. Si no ves el cambio, recarga con Cmd+Shift+R.
   En el HTML, cada imagen lleva `--ar` (ancho ÷ alto). Si cambias una imagen por otra de distinta proporción, actualiza ese número.
 - **Motion:** los tres videos tienen el mismo tamaño y se reproducen solos, en loop y sin sonido.
   Al pasar el mouse por uno, se abre a su formato horizontal; en el celular se abre con el botón “Full frame”.
-  `--ct --cb --cl --cr` recortan los bordes que traían los videos originales (barras, líneas, reproductor).
+  Los videos de Motion ya están editados: sin cursor, sin marco de selección y sin barra del reproductor.
 
 ## Colores (por si los necesitas)
 
