@@ -196,7 +196,7 @@ body[data-tone="light"] .cursor, body[data-tone="orange"] .cursor{ background:va
 .hero-stage{ position:relative; display:grid; grid-template-columns:repeat(12, minmax(0, 1fr)); column-gap:var(--gut); align-items:center; min-height:0; padding:clamp(16px, 3svh, 40px) 0; }
 /* the type holds the left nine columns, the portrait the right five:
    they overlap by a column or two, never over the face */
-.home-photo{ grid-column:8 / -1; grid-row:1; justify-self:center; position:relative; z-index:1; height:min(58svh, 44vw, 620px); aspect-ratio:4 / 5; }
+.home-photo{ grid-column:8 / -1; grid-row:1; justify-self:center; position:relative; z-index:1; height:min(58svh, 44vw, 620px); aspect-ratio:3 / 4; }
 .home-photo .card{ position:absolute; inset:0; display:block; overflow:hidden; }
 .home-photo .c2{ background:var(--orange); opacity:.42; transform:translate(-10%, -6%) rotate(-6deg); }
 .home-photo .c1{ background:var(--orange); }
@@ -204,7 +204,7 @@ body[data-tone="light"] .cursor, body[data-tone="orange"] .cursor{ background:va
 /* the portrait fills the card (as before) and is scaled just enough that
    the jacket covers the bottom and both sides: no orange slivers or cut
    edges at the foot of the card */
-.home-photo .me{ position:absolute; left:50%; bottom:0; width:150%; max-width:none; height:auto; transform:translateX(-50%);
+.home-photo .me{ position:absolute; left:50%; bottom:0; width:140%; max-width:none; height:auto; transform:translateX(-50%);
   filter:brightness(.8) contrast(1.06) saturate(.95); }
 .star-wrap{ position:absolute; inset:0; z-index:0; pointer-events:none; }
 .home-photo .star.behind{ width:58%; aspect-ratio:1; top:-18%; right:-24%; opacity:.9; }
