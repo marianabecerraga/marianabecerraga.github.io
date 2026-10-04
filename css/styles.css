@@ -222,6 +222,19 @@ body[data-tone="light"] .cursor, body[data-tone="orange"] .cursor{ background:va
 .arrow{ width:46px; height:46px; border-radius:50%; border:1.5px solid var(--black); background:transparent; cursor:pointer; font-family:var(--ui); font-size:18px; display:grid; place-items:center; transition:background .3s var(--out), color .3s var(--out); }
 .arrow:hover{ background:var(--black); color:var(--beige); }
 .track{ display:flex; gap:var(--gut); overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:18px; margin:0 calc(var(--pad) * -1); padding-left:var(--pad); padding-right:var(--pad); scroll-padding-left:var(--pad); scrollbar-width:thin; scrollbar-color:var(--black) transparent; }
+/* sideways cue: a chevron on the right edge, a soft fade and a small
+   "Scroll / Swipe ›" hint. They disappear once the end is reached. */
+.track-wrap{ position:relative; --cw:max(220px, calc((100vw - 2 * var(--pad) - 3 * var(--gut)) / 4)); }
+.track-wrap::after{ content:""; position:absolute; top:0; right:calc(var(--pad) * -1); width:clamp(48px, 9vw, 140px); height:calc(var(--cw) * 1.25); pointer-events:none;
+  background:linear-gradient(to right, rgba(223,201,168,0), var(--tan)); transition:opacity .6s var(--out); }
+.track-next{ position:absolute; z-index:2; right:0; top:calc(var(--cw) * 1.25 / 2 - 28px); width:56px; height:56px; border-radius:50%; border:0; background:var(--black); color:var(--beige); cursor:pointer; display:grid; place-items:center;
+  box-shadow:0 10px 30px rgba(21,19,20,.25); transition:opacity .5s var(--out), transform .5s var(--out); animation:nudge 2.4s var(--ease) infinite; }
+.track-next svg, .swipe-hint svg{ width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+.track-next:hover{ animation:none; transform:scale(1.08); }
+.track-wrap.at-end::after, .track-wrap.at-end .track-next{ opacity:0; pointer-events:none; }
+.swipe-hint{ margin:0 0 0 auto; align-self:center; display:inline-flex; align-items:center; gap:4px; font-family:var(--ui); font-weight:600; font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; opacity:.6; }
+.swipe-hint svg{ width:16px; height:16px; animation:nudge 2.4s var(--ease) infinite; }
+@keyframes nudge{ 0%, 60%, 100%{ transform:translateX(0); } 30%{ transform:translateX(5px); } }
 /* four cards per view on desktop = three grid columns each */
 .card{ flex:0 0 calc((100vw - 2 * var(--pad) - 3 * var(--gut)) / 4); min-width:220px; scroll-snap-align:start; text-decoration:none; display:block; }
 .card[hidden]{ display:none; }
@@ -233,8 +246,8 @@ body[data-tone="light"] .cursor, body[data-tone="orange"] .cursor{ background:va
 .card:hover .title{ transform:translateX(6px); }
 .card p{ margin:0; font-size:14.5px; }
 .card .role{ font-family:var(--ui); font-weight:600; font-size:12.5px; color:var(--orange-deep); margin-top:6px; }
-@media (max-width:980px){ .card{ flex-basis:calc((100vw - 2 * var(--pad) - var(--gut)) / 2.3); } }
-@media (max-width:560px){ .card{ flex-basis:76vw; } .arrows{ display:none; } .card .title{ font-size:21px; } }
+@media (max-width:980px){ .card{ flex-basis:calc((100vw - 2 * var(--pad) - var(--gut)) / 2.3); } .track-wrap{ --cw:max(220px, calc((100vw - 2 * var(--pad) - var(--gut)) / 2.3)); } }
+@media (max-width:560px){ .card{ flex-basis:76vw; } .track-wrap{ --cw:76vw; } .arrows{ display:none; } .card .title{ font-size:21px; } .track-next{ width:48px; height:48px; top:calc(var(--cw) * 1.25 / 2 - 24px); } }
 
 /* ---------- projects: 12-column body ---------- */
 .p-body{ display:grid; grid-template-columns:repeat(12, minmax(0, 1fr)); column-gap:var(--gut); align-items:start; }
@@ -408,7 +421,7 @@ body[data-tone="light"] .cursor, body[data-tone="orange"] .cursor{ background:va
 
 @media (prefers-reduced-motion: reduce){
   html{ scroll-behavior:auto; }
-  .spin{ animation:none; }
+  .spin, .track-next, .swipe-hint svg{ animation:none; }
   *{ transition:none !important; }
   .js .rv, .js .split .w > i, .js .rvi{ opacity:1 !important; transform:none !important; clip-path:none !important; }
   .js .panel:not(.home){ clip-path:none; }

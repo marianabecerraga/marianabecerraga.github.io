@@ -82,6 +82,12 @@
       track.scrollTo({ left: 0, behavior: reduce ? 'auto' : 'smooth' });
     });
   });
+  var trackWrap = document.getElementById('trackWrap');
+  function trackEnd() { trackWrap.classList.toggle('at-end', track.scrollLeft + track.clientWidth >= track.scrollWidth - 8); }
+  track.addEventListener('scroll', trackEnd, { passive: true });
+  addEventListener('resize', trackEnd);
+  chips.forEach(function (c) { c.addEventListener('click', function () { setTimeout(trackEnd, 400); }); });
+  trackEnd();
   document.querySelectorAll('[data-scroll]').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var dir = parseInt(btn.getAttribute('data-scroll'), 10);
