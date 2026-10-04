@@ -206,13 +206,17 @@ body[data-tone="light"] .cursor, body[data-tone="orange"] .cursor{ background:va
 .star-wrap{ position:absolute; inset:0; z-index:0; pointer-events:none; }
 .home-photo .star.behind{ width:58%; aspect-ratio:1; top:-18%; right:-24%; opacity:.9; }
 .home-photo .c1, .star-wrap{ transition:transform 1.6s var(--out); }
-.hero-title{ grid-column:1 / 10; grid-row:1; justify-self:start; position:relative; z-index:3; color:var(--beige);
-  /* widest line, THEN I MAKE with its indent, is ~10.7em: it fills ~74% of the measure */
-  font-size:min(calc((100vw - 2 * var(--pad)) * .74 / 10.7), 14.5svh); line-height:.86; margin:0; }
-.hero-title .ln{ display:block; white-space:nowrap; }
-.hero-title .l2{ padding-left:1.9em; }
-.hero-title .l3{ padding-left:.55em; }
-.hero-title .l4{ padding-left:3.1em; }
+.hero-title{ grid-column:1 / 10; grid-row:1; justify-self:start; position:relative; z-index:3;
+  /* F = size of the second sentence. Its widest line, THEN I MAKE
+     (10.3em, tightened), fills ~74% of the measure. */
+  font-size:min(calc((100vw - 2 * var(--pad)) * .74 / 10.2), 16svh); line-height:.86; margin:0; }
+.hero-title .s, .hero-title .ln{ display:block; white-space:nowrap; }
+/* one flush-left axis. The first thought is set at .655 of the second,
+   so I START WITH measures exactly IT WORK.: both sentences share
+   their left and right edges, and the bigger, white line between them
+   (THEN I MAKE) is the one that breaks out towards the portrait. */
+.hero-title .s1{ font-size:.64em; line-height:.9; letter-spacing:.008em; color:var(--beige); margin-bottom:.42em; text-shadow:0 1px 22px rgba(21,19,20,.5); }
+.hero-title .s2{ letter-spacing:-.02em; color:#fff; }
 br.m-only{ display:none; }
 .nw{ white-space:nowrap; }
 
@@ -224,8 +228,11 @@ br.m-only{ display:none; }
   /* portrait first, on the right; the sentence rises over its lower half */
   .hero-stage{ display:flex; flex-direction:column; justify-content:center; padding:20px 0; }
   .home-photo{ align-self:flex-end; height:auto; width:min(72vw, 40svh * .8, 340px); }
-  .hero-title{ align-self:flex-start; font-size:min(calc((100vw - 2 * var(--pad)) / 8.3), 84px); line-height:.88; margin-top:-2.4em; }
-  .hero-title .ln{ display:inline; white-space:normal; padding-left:0; }
+  /* phones: F sized so MAKE IT fills the column; the first sentence
+     at .6 so I START WITH matches it — two lines over three, one block */
+  .hero-title{ align-self:flex-start; font-size:min(calc((100vw - 2 * var(--pad)) / 6.75), 84px); line-height:.86; margin-top:-1.55em; }
+  .hero-title .s1{ font-size:.6em; margin-bottom:.38em; }
+  .hero-title .s2 .ln{ display:inline; white-space:normal; }
   br.m-only{ display:inline; }
   .micro-bottom{ grid-template-columns:auto auto; justify-content:start; column-gap:28px; }
 }
