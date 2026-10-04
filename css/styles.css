@@ -193,20 +193,22 @@ body[data-tone="light"] .cursor, body[data-tone="orange"] .cursor{ background:va
 .micro-bottom > :last-child{ justify-self:end; }
 .micro-bottom span{ opacity:.55; padding:8px 0; }
 
-.hero-stage{ position:relative; display:grid; place-items:center; min-height:0; padding:clamp(16px, 3svh, 40px) 0; }
-.hero-stage > *{ grid-area:1 / 1; }
-.home-photo{ position:relative; z-index:1; height:min(62svh, 46vw, 620px); aspect-ratio:4 / 5; translate:9% 0; }
+.hero-stage{ position:relative; display:grid; grid-template-columns:repeat(12, minmax(0, 1fr)); column-gap:var(--gut); align-items:center; min-height:0; padding:clamp(16px, 3svh, 40px) 0; }
+/* the type holds the left nine columns, the portrait the right five:
+   they overlap by a column or two, never over the face */
+.home-photo{ grid-column:8 / -1; grid-row:1; justify-self:center; position:relative; z-index:1; height:min(58svh, 44vw, 620px); aspect-ratio:4 / 5; }
 .home-photo .card{ position:absolute; inset:0; display:block; overflow:hidden; }
 .home-photo .c2{ background:var(--orange); opacity:.42; transform:translate(-10%, -6%) rotate(-6deg); }
 .home-photo .c1{ background:var(--orange); }
-/* duotone: the cut-out in greyscale, multiplied into the orange */
+/* the portrait in colour, the light brought down a little so the type stays in front */
 .home-photo .me{ position:absolute; left:50%; bottom:0; width:128%; max-width:none; height:auto; transform:translateX(-50%);
-  filter:grayscale(1) contrast(1.15) brightness(1.02); mix-blend-mode:multiply; }
+  filter:brightness(.8) contrast(1.06) saturate(.95); }
 .star-wrap{ position:absolute; inset:0; z-index:0; pointer-events:none; }
 .home-photo .star.behind{ width:58%; aspect-ratio:1; top:-18%; right:-24%; opacity:.9; }
 .home-photo .c1, .star-wrap{ transition:transform 1.6s var(--out); }
-.hero-title{ position:relative; z-index:3; color:var(--beige);
-  font-size:min(calc((100vw - 2 * var(--pad)) * .8 / 10.1), 14.5svh); line-height:.86; margin:0; }
+.hero-title{ grid-column:1 / 10; grid-row:1; justify-self:start; position:relative; z-index:3; color:var(--beige);
+  /* widest line, THEN I MAKE with its indent, is ~10.7em: it fills ~74% of the measure */
+  font-size:min(calc((100vw - 2 * var(--pad)) * .74 / 10.7), 14.5svh); line-height:.86; margin:0; }
 .hero-title .ln{ display:block; white-space:nowrap; }
 .hero-title .l2{ padding-left:1.9em; }
 .hero-title .l3{ padding-left:.55em; }
@@ -219,9 +221,10 @@ br.m-only{ display:none; }
   .home{ padding-bottom:20px; }
   .micro{ grid-template-columns:1fr 1fr; row-gap:10px; font-size:10.5px; }
   .micro-top p:last-child{ text-align:left; }
-  .hero-stage{ padding:28px 0; }
-  .home-photo{ height:min(48svh, 100vw); translate:10% 0; }
-  .hero-title{ font-size:min(calc((100vw - 2 * var(--pad)) / 8.3), 84px); line-height:.88; justify-self:start; }
+  /* portrait first, on the right; the sentence rises over its lower half */
+  .hero-stage{ display:flex; flex-direction:column; justify-content:center; padding:20px 0; }
+  .home-photo{ align-self:flex-end; height:auto; width:min(72vw, 40svh * .8, 340px); }
+  .hero-title{ align-self:flex-start; font-size:min(calc((100vw - 2 * var(--pad)) / 8.3), 84px); line-height:.88; margin-top:-2.4em; }
   .hero-title .ln{ display:inline; white-space:normal; padding-left:0; }
   br.m-only{ display:inline; }
   .micro-bottom{ grid-template-columns:auto auto; justify-content:start; column-gap:28px; }
