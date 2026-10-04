@@ -204,8 +204,12 @@ br.m-only{ display:none; }
    bottom edge so the first screen is complete. */
 @media (max-width:820px){
   .home{ padding-bottom:0; min-height:100svh; }
-  .home .sh{ flex-direction:column; gap:6px; margin-bottom:0; }
-  .home .sh p:last-child{ text-align:left; }
+  /* labels as a small stacked block: name / role / place — no wrapped dots */
+  .home .sh{ flex-direction:column; gap:4px; margin-bottom:0; }
+  .home .sh p:last-child{ text-align:left; margin-top:6px; }
+  .home .hello .sep{ display:none; }
+  .home .hello .nw{ display:block; }
+  .home .hello .nw + .nw{ font-weight:500; opacity:.75; }
   /* sized so the widest line, WITH THE (7.8em), fills the column exactly */
   .hero-title{ font-size:min(calc((100vw - 2 * var(--pad)) / 7.9), 84px); line-height:.86; margin-top:clamp(20px, 4svh, 40px); }
   .hero-title .s1 .ln{ display:inline; white-space:normal; }
@@ -214,7 +218,7 @@ br.m-only{ display:none; }
   .hero-title .s2{ font-size:.42em; line-height:.92; margin-top:.9em; }
   .home .actions{ margin-top:clamp(20px, 3.4svh, 32px); }
   .home-photo{ position:relative; right:auto; top:auto; margin:auto calc(var(--pad) * -1) 0 auto; padding-top:16px;
-    width:min(84vw, 46svh * 1.08, 440px); aspect-ratio:1247 / 1153; height:auto; }
+    width:min(96vw, 50svh * 1.08, 470px); aspect-ratio:1247 / 1153; height:auto; }
   .home-photo .me{ width:100%; height:100%; max-height:none; object-fit:contain; object-position:right bottom; }
   .home-photo .star.behind{ height:auto; width:104%; bottom:2%; right:-6%; }
 }
