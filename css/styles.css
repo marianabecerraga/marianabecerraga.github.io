@@ -30,7 +30,7 @@
   --text:"DM Sans", "Helvetica Neue", Arial, sans-serif;
 
   /* grid */
-  --pad:clamp(16px, 3vw, 44px);
+  --pad:clamp(20px, 4.2vw, 72px);
   --gut:clamp(12px, 1.6vw, 24px);
   --gap:clamp(8px, .8vw, 12px);         /* between images */
   --head:72px;
@@ -43,7 +43,7 @@
   --t-label:11.5px;
 
   /* rhythm */
-  --s-1:12px; --s-2:24px; --s-3:clamp(32px, 3.6vw, 56px); --s-4:clamp(64px, 8vw, 128px);
+  --s-1:12px; --s-2:24px; --s-3:clamp(32px, 3.8vw, 64px); --s-4:clamp(80px, 10vw, 160px);
 
   /* motion */
   --ease:cubic-bezier(.65,0,.25,1);      /* in-out, for things that change shape */
@@ -84,7 +84,6 @@ button{ font:inherit; color:inherit; }
 .sh p:first-child{ color:var(--orange); }
 .tone-orange .sh p:first-child{ color:var(--black); }
 .sh p:last-child{ text-align:right; opacity:.6; }
-@media (max-width:820px){ .hide-m{ display:none; } }
 @media (max-width:560px){ .sh{ flex-direction:column; gap:4px; } .sh p:last-child{ text-align:left; } }
 
 /* ---------- section tones ---------- */
@@ -176,52 +175,58 @@ body[data-tone="light"] .cursor, body[data-tone="orange"] .cursor{ background:va
 /* section transition: each panel rises as a soft card and settles to full bleed (driven by JS) */
 .js .panel:not(.home){ clip-path:inset(0 var(--ci, 0px) 0 var(--ci, 0px) round var(--cr, 0px) var(--cr, 0px) 0 0); }
 
-/* ---------- home ---------- */
+/* ---------- home ----------
+   Built like a poster: micro-type anchors the four edges on the grid,
+   the headline sits on the bottom edge at full width and runs over the
+   foot of the portrait; the orange answer tucks into the space the
+   second line leaves. */
 .home, .contact{ min-height:100svh; }
-.home{ display:flex; flex-direction:column; padding-bottom:var(--s-3); }
-.home .sh{ position:relative; z-index:3; }
-.home .sh p:first-child{ color:inherit; }
-/* two sentences, two scales: the idea is large and leans left;
-   the making is set smaller, in orange, and answers from the right,
-   leading the eye down to the portrait */
-.hero-title{ position:relative; z-index:3; font-size:var(--t-hero); line-height:.84; margin:clamp(12px, 3svh, 40px) 0 0; }
-.hero-title .s, .hero-title .ln{ display:block; white-space:nowrap; }
-.hero-title .l2{ padding-left:.7em; }
-.hero-title .s2{ font-size:.44em; line-height:.9; text-align:right; margin-top:.5em; letter-spacing:-.01em; }
-.hero-title .o{ color:var(--orange); }
-.home .actions{ position:relative; z-index:3; margin-top:auto; }
-.home-photo{ position:absolute; z-index:2; right:var(--pad); bottom:0; top:var(--photo-top, 50%); width:min(32vw, 520px); display:flex; justify-content:flex-end; align-items:flex-end; }
-.home-photo .me{ position:relative; z-index:2; width:auto; height:auto; max-width:100%; max-height:100%;
-  -webkit-mask-image:linear-gradient(to bottom, #000 80%, transparent 100%); mask-image:linear-gradient(to bottom, #000 80%, transparent 100%); }
-.home-photo .star.behind{ height:115%; aspect-ratio:1; bottom:-6%; right:-12%; z-index:1; opacity:.9; }
+.home{ display:grid; grid-template-columns:repeat(12, minmax(0, 1fr)); grid-template-rows:auto 1fr auto auto; column-gap:var(--gut); padding-bottom:clamp(20px, 3svh, 36px); }
+.micro{ grid-column:1 / -1; display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); column-gap:var(--gut); font-family:var(--ui); font-size:11.5px; line-height:1.4; letter-spacing:.06em; text-transform:uppercase; position:relative; z-index:3; }
+.micro p{ margin:0; display:flex; flex-direction:column; }
+.micro p span:first-child{ opacity:.5; }
+.micro p span:last-child{ font-weight:600; }
+.micro-top p:last-child{ text-align:right; }
+.micro-bottom{ align-items:end; }
+.micro-bottom a{ font-weight:600; text-decoration:underline; text-underline-offset:5px; text-decoration-thickness:1.5px; justify-self:start; padding:8px 0; }
+.micro-bottom a:hover{ color:var(--orange); }
+.micro-bottom > :last-child{ justify-self:end; opacity:.6; }
+.micro-bottom span{ opacity:.6; padding:8px 0; }
+.home-photo{ grid-column:7 / -1; grid-row:2 / 4; align-self:start; justify-self:end; position:relative; z-index:2; margin-top:clamp(16px, 3svh, 40px);
+  width:min(40vw, (100svh - 300px) * 1.08, 640px); aspect-ratio:1247 / 1153; }
+.home-photo .me{ position:relative; z-index:2; width:100%; height:100%; object-fit:contain;
+  -webkit-mask-image:linear-gradient(to bottom, #000 72%, transparent 100%); mask-image:linear-gradient(to bottom, #000 72%, transparent 100%); }
 .star-wrap{ position:absolute; inset:0; z-index:1; pointer-events:none; }
+.home-photo .star.behind{ width:112%; aspect-ratio:1; top:-14%; right:-14%; z-index:1; opacity:.9; }
 .home-photo .me, .star-wrap{ transition:transform 1.6s var(--out); }
+.hero-title{ grid-column:1 / -1; grid-row:3; position:relative; z-index:3; align-self:end;
+  /* "I START WITH" is ~10.1em: the first line spans the full measure */
+  font-size:min(calc((100vw - 2 * var(--pad)) / 10.7), 19svh); line-height:.84; margin:0 0 clamp(16px, 2.6svh, 32px); }
+.hero-title .ln{ display:block; white-space:nowrap; }
+.hero-title .r2{ display:flex; align-items:flex-end; justify-content:space-between; gap:.2em; }
+.hero-title .s2{ display:block; font-size:.22em; line-height:.95; text-align:right; padding-bottom:.4em; letter-spacing:-.005em; white-space:nowrap; }
+.hero-title .o{ color:var(--orange); }
+.micro-bottom{ grid-row:4; }
 br.m-only{ display:none; }
 .nw{ white-space:nowrap; }
-/* phones: a composed poster, not a shrunk desktop.
-   Three clean lines (I START / WITH THE / IDEA.), the orange answer
-   tucked to the right, actions, and the portrait anchored to the
-   bottom edge so the first screen is complete. */
+
+/* phones: the same poster, stacked: micro-type, portrait, the headline
+   rising over the foot of the portrait, then the answer and the links. */
 @media (max-width:820px){
-  .home{ padding-bottom:0; min-height:100svh; }
-  /* labels as a small stacked block: name / role / place — no wrapped dots */
-  .home .sh{ flex-direction:column; gap:4px; margin-bottom:0; }
-  .home .sh p:last-child{ text-align:left; margin-top:6px; }
-  .home .hello .sep{ display:none; }
-  .home .hello .nw{ display:block; }
-  .home .hello .nw + .nw{ font-weight:500; opacity:.75; }
-  /* sized so the widest line, WITH THE (7.8em), fills the column exactly */
-  .hero-title{ font-size:min(calc((100vw - 2 * var(--pad)) / 7.9), 84px); line-height:.86; margin-top:clamp(20px, 4svh, 40px); }
-  .hero-title .s1 .ln{ display:inline; white-space:normal; }
-  .hero-title .l2{ padding-left:0; }
+  .home{ display:flex; flex-direction:column; min-height:auto; padding-bottom:clamp(40px, 7svh, 64px); }
+  .micro{ grid-template-columns:1fr 1fr; row-gap:10px; font-size:10.5px; }
+  .micro-top p:last-child{ text-align:left; }
+  .home-photo{ align-self:flex-end; margin:8px calc(var(--pad) * -1) 0 auto; width:min(88vw, 44svh * 1.08, 460px); }
+  .home-photo .star.behind{ width:100%; top:-6%; right:-4%; }
+  .hero-title{ align-self:stretch; font-size:min(calc((100vw - 2 * var(--pad)) / 8.3), 84px); line-height:.86; margin:-.9em 0 18px; }
+  .hero-title .l1, .hero-title .l2{ display:inline; white-space:normal; }
   br.m-only{ display:inline; }
-  .hero-title .s2{ font-size:.42em; line-height:.92; margin-top:.9em; }
-  .home .actions{ margin-top:clamp(20px, 3.4svh, 32px); }
-  .home-photo{ position:relative; right:auto; top:auto; margin:auto calc(var(--pad) * -1) 0 auto; padding-top:16px;
-    width:min(96vw, 50svh * 1.08, 470px); aspect-ratio:1247 / 1153; height:auto; }
-  .home-photo .me{ width:100%; height:100%; max-height:none; object-fit:contain; object-position:right bottom; }
-  .home-photo .star.behind{ height:auto; width:104%; bottom:2%; right:-6%; }
+  .hero-title .r2{ display:inline; }
+  .hero-title .s2{ font-size:.4em; margin-top:.7em; padding:0; }
+  .micro-bottom{ grid-template-columns:auto auto; justify-content:start; column-gap:28px; margin-top:22px; }
+  .home-photo{ width:min(96vw, 48svh * 1.08, 480px); }
 }
+@media (max-width:820px){ .hide-m{ display:none !important; } }
 
 /* ---------- work ---------- */
 .work{ display:flex; flex-direction:column; }

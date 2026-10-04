@@ -20,17 +20,7 @@
   }, { rootMargin: '-6% 0px -93% 0px' });
   panels.forEach(function (p) { toneObserver.observe(p); });
 
-  /* ---------- 1b. Hero: the portrait sits under the orange answer,
-     so the eye travels idea → making → person ---------- */
   var home = document.getElementById('home');
-  var answer = home.querySelector('.hero-title .s2');
-  function placePhoto() {
-    var top = answer.getBoundingClientRect().bottom - home.getBoundingClientRect().top + 16;
-    home.style.setProperty('--photo-top', Math.min(top, home.clientHeight - 220) + 'px');
-  }
-  placePhoto();
-  addEventListener('resize', placePhoto);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(placePhoto);
 
   /* ---------- 2. The cursor: a dot that grows over links and
      carries a word over work ("View", "Expand") ---------- */
@@ -216,10 +206,10 @@
       el.classList.add('split');
       return n;
     }
-    var heroCount = split(home.querySelector('.hero-title .s1'), 0.15, 0.09);
-    split(home.querySelector('.hero-title .s2'), 0.25 + heroCount * 0.09, 0.07);
-    home.querySelector('.hero-title .s1').classList.add('reveal-target');
-    home.querySelector('.hero-title .s2').classList.add('reveal-target');
+    var heroCount = split(home.querySelector('.hero-title .l1'), 0.15, 0.09);
+    heroCount += split(home.querySelector('.hero-title .l2'), 0.15 + heroCount * 0.09, 0.09);
+    split(home.querySelector('.hero-title .s2'), 0.3 + heroCount * 0.09, 0.06);
+    home.querySelector('.hero-title').classList.add('split', 'reveal-target');
     document.querySelectorAll('.display:not(.long), .interlude-lead, .statement').forEach(function (el) {
       split(el, 0.05, 0.07); el.classList.add('reveal-target');
     });
@@ -233,7 +223,7 @@
         el.style.setProperty('--d', (Math.min(sibs.indexOf(el), 6) * step).toFixed(2) + 's');
       });
     }
-    mark('.sh, .home .actions, .chips, .arrows', 'rv', 0.08);
+    mark('.sh, .micro, .chips, .arrows', 'rv', 0.08);
     mark('.p-line, .story > *, .meta, .next, .path li, .interlude > :not(.interlude-lead), .mcap', 'rv', 0.1);
     mark('.card, .reel, .mcard, .plate figcaption, .studio-live figcaption, .studio-text > p:not(.statement)', 'rv', 0.1);
     mark('.roles > div, .about-text > .k, .about-text > .meta, .about-text > .btn, .contact .actions, .foot', 'rv', 0.07);
