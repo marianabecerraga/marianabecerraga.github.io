@@ -25,7 +25,7 @@
   /* ---------- 2. The cursor: a dot that grows over links and
      carries a word over work ("View", "Expand") ---------- */
   var cursor = document.querySelector('.cursor');
-  var heroMe = home.querySelector('.home-photo .me');
+  var heroMe = home.querySelector('.home-photo .c1');
   var heroStar = home.querySelector('.star-wrap');
   if (finePointer && cursor && !reduce) {
     body.classList.add('has-cursor');
@@ -206,9 +206,10 @@
       el.classList.add('split');
       return n;
     }
-    var heroCount = split(home.querySelector('.hero-title .l1'), 0.15, 0.09);
-    heroCount += split(home.querySelector('.hero-title .l2'), 0.15 + heroCount * 0.09, 0.09);
-    split(home.querySelector('.hero-title .s2'), 0.3 + heroCount * 0.09, 0.06);
+    var heroCount = 0;
+    ['.l1', '.l2', '.l3', '.l4'].forEach(function (sel, i) {
+      heroCount += split(home.querySelector('.hero-title ' + sel), 0.15 + heroCount * 0.08 + i * 0.06, 0.08);
+    });
     home.querySelector('.hero-title').classList.add('split', 'reveal-target');
     document.querySelectorAll('.display:not(.long), .interlude-lead, .statement').forEach(function (el) {
       split(el, 0.05, 0.07); el.classList.add('reveal-target');

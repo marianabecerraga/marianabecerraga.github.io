@@ -176,13 +176,13 @@ body[data-tone="light"] .cursor, body[data-tone="orange"] .cursor{ background:va
 .js .panel:not(.home){ clip-path:inset(0 var(--ci, 0px) 0 var(--ci, 0px) round var(--cr, 0px) var(--cr, 0px) 0 0); }
 
 /* ---------- home ----------
-   Built like a poster: micro-type anchors the four edges on the grid,
-   the headline sits on the bottom edge at full width and runs over the
-   foot of the portrait; the orange answer tucks into the space the
-   second line leaves. */
+   A poster on Dynamic Black: micro-type on the edges, and in the
+   centre the portrait turned into a graphic object (an orange duotone
+   card over a second, tilted card) with the full sentence set across it
+   as one staggered block. The type leads; the photo supports. */
 .home, .contact{ min-height:100svh; }
-.home{ display:grid; grid-template-columns:repeat(12, minmax(0, 1fr)); grid-template-rows:auto 1fr auto auto; column-gap:var(--gut); padding-bottom:clamp(20px, 3svh, 36px); }
-.micro{ grid-column:1 / -1; display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); column-gap:var(--gut); font-family:var(--ui); font-size:11.5px; line-height:1.4; letter-spacing:.06em; text-transform:uppercase; position:relative; z-index:3; }
+.home{ display:grid; grid-template-rows:auto 1fr auto; padding-bottom:clamp(20px, 3svh, 36px); }
+.micro{ display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); column-gap:var(--gut); font-family:var(--ui); font-size:11.5px; line-height:1.4; letter-spacing:.06em; text-transform:uppercase; position:relative; z-index:4; }
 .micro p{ margin:0; display:flex; flex-direction:column; }
 .micro p span:first-child{ opacity:.5; }
 .micro p span:last-child{ font-weight:600; }
@@ -190,41 +190,41 @@ body[data-tone="light"] .cursor, body[data-tone="orange"] .cursor{ background:va
 .micro-bottom{ align-items:end; }
 .micro-bottom a{ font-weight:600; text-decoration:underline; text-underline-offset:5px; text-decoration-thickness:1.5px; justify-self:start; padding:8px 0; }
 .micro-bottom a:hover{ color:var(--orange); }
-.micro-bottom > :last-child{ justify-self:end; opacity:.6; }
-.micro-bottom span{ opacity:.6; padding:8px 0; }
-.home-photo{ grid-column:7 / -1; grid-row:2 / 4; align-self:start; justify-self:end; position:relative; z-index:2; margin-top:clamp(16px, 3svh, 40px);
-  width:min(40vw, (100svh - 300px) * 1.08, 640px); aspect-ratio:1247 / 1153; }
-.home-photo .me{ position:relative; z-index:2; width:100%; height:100%; object-fit:contain;
-  -webkit-mask-image:linear-gradient(to bottom, #000 72%, transparent 100%); mask-image:linear-gradient(to bottom, #000 72%, transparent 100%); }
-.star-wrap{ position:absolute; inset:0; z-index:1; pointer-events:none; }
-.home-photo .star.behind{ width:112%; aspect-ratio:1; top:-14%; right:-14%; z-index:1; opacity:.9; }
-.home-photo .me, .star-wrap{ transition:transform 1.6s var(--out); }
-.hero-title{ grid-column:1 / -1; grid-row:3; position:relative; z-index:3; align-self:end;
-  /* "I START WITH" is ~10.1em: the first line spans the full measure */
-  font-size:min(calc((100vw - 2 * var(--pad)) / 10.7), 19svh); line-height:.84; margin:0 0 clamp(16px, 2.6svh, 32px); }
+.micro-bottom > :last-child{ justify-self:end; }
+.micro-bottom span{ opacity:.55; padding:8px 0; }
+
+.hero-stage{ position:relative; display:grid; place-items:center; min-height:0; padding:clamp(16px, 3svh, 40px) 0; }
+.hero-stage > *{ grid-area:1 / 1; }
+.home-photo{ position:relative; z-index:1; height:min(62svh, 46vw, 620px); aspect-ratio:4 / 5; translate:9% 0; }
+.home-photo .card{ position:absolute; inset:0; display:block; overflow:hidden; }
+.home-photo .c2{ background:var(--orange); opacity:.42; transform:translate(-10%, -6%) rotate(-6deg); }
+.home-photo .c1{ background:var(--orange); }
+/* duotone: the cut-out in greyscale, multiplied into the orange */
+.home-photo .me{ position:absolute; left:50%; bottom:0; width:128%; max-width:none; height:auto; transform:translateX(-50%);
+  filter:grayscale(1) contrast(1.15) brightness(1.02); mix-blend-mode:multiply; }
+.star-wrap{ position:absolute; inset:0; z-index:0; pointer-events:none; }
+.home-photo .star.behind{ width:58%; aspect-ratio:1; top:-18%; right:-24%; opacity:.9; }
+.home-photo .c1, .star-wrap{ transition:transform 1.6s var(--out); }
+.hero-title{ position:relative; z-index:3; color:var(--beige);
+  font-size:min(calc((100vw - 2 * var(--pad)) * .8 / 10.1), 14.5svh); line-height:.86; margin:0; }
 .hero-title .ln{ display:block; white-space:nowrap; }
-.hero-title .r2{ display:flex; align-items:flex-end; justify-content:space-between; gap:.2em; }
-.hero-title .s2{ display:block; font-size:.22em; line-height:.95; text-align:right; padding-bottom:.4em; letter-spacing:-.005em; white-space:nowrap; }
-.hero-title .o{ color:var(--orange); }
-.micro-bottom{ grid-row:4; }
+.hero-title .l2{ padding-left:1.9em; }
+.hero-title .l3{ padding-left:.55em; }
+.hero-title .l4{ padding-left:3.1em; }
 br.m-only{ display:none; }
 .nw{ white-space:nowrap; }
 
-/* phones: the same poster, stacked: micro-type, portrait, the headline
-   rising over the foot of the portrait, then the answer and the links. */
+/* phones: the same poster, narrower: six short lines over the card */
 @media (max-width:820px){
-  .home{ display:flex; flex-direction:column; min-height:auto; padding-bottom:clamp(40px, 7svh, 64px); }
+  .home{ padding-bottom:20px; }
   .micro{ grid-template-columns:1fr 1fr; row-gap:10px; font-size:10.5px; }
   .micro-top p:last-child{ text-align:left; }
-  .home-photo{ align-self:flex-end; margin:8px calc(var(--pad) * -1) 0 auto; width:min(88vw, 44svh * 1.08, 460px); }
-  .home-photo .star.behind{ width:100%; top:-6%; right:-4%; }
-  .hero-title{ align-self:stretch; font-size:min(calc((100vw - 2 * var(--pad)) / 8.3), 84px); line-height:.86; margin:-.9em 0 18px; }
-  .hero-title .l1, .hero-title .l2{ display:inline; white-space:normal; }
+  .hero-stage{ padding:28px 0; }
+  .home-photo{ height:min(48svh, 100vw); translate:10% 0; }
+  .hero-title{ font-size:min(calc((100vw - 2 * var(--pad)) / 8.3), 84px); line-height:.88; justify-self:start; }
+  .hero-title .ln{ display:inline; white-space:normal; padding-left:0; }
   br.m-only{ display:inline; }
-  .hero-title .r2{ display:inline; }
-  .hero-title .s2{ font-size:.4em; margin-top:.7em; padding:0; }
-  .micro-bottom{ grid-template-columns:auto auto; justify-content:start; column-gap:28px; margin-top:22px; }
-  .home-photo{ width:min(96vw, 48svh * 1.08, 480px); }
+  .micro-bottom{ grid-template-columns:auto auto; justify-content:start; column-gap:28px; }
 }
 @media (max-width:820px){ .hide-m{ display:none !important; } }
 
