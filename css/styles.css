@@ -201,7 +201,7 @@ body[data-tone="light"] .cursor, body[data-tone="orange"] .cursor{ background:va
 .home-photo .c2{ background:var(--orange); opacity:.42; transform:translate(-10%, -6%) rotate(-6deg); }
 .home-photo .c1{ background:var(--orange); }
 /* the portrait in colour, the light brought down a little so the type stays in front */
-.home-photo .me{ position:absolute; left:50%; bottom:0; width:128%; max-width:none; height:auto; transform:translateX(-50%);
+.home-photo .me{ position:absolute; left:0; right:0; bottom:0; width:100%; height:auto;
   filter:brightness(.8) contrast(1.06) saturate(.95); }
 .star-wrap{ position:absolute; inset:0; z-index:0; pointer-events:none; }
 .home-photo .star.behind{ width:58%; aspect-ratio:1; top:-18%; right:-24%; opacity:.9; }
