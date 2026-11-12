@@ -158,19 +158,22 @@ body[data-tone="light"] .dots a.active::before, body[data-tone="orange"] .dots a
 .mobile-nav.open a:nth-of-type(8){ transition-delay:.28s; } .mobile-nav.open a:nth-of-type(9){ transition-delay:.32s; }
 .mobile-nav .close{ position:absolute; top:calc(18px + env(safe-area-inset-top,0px)); right:var(--pad); }
 
-/* ---------- cursor: a dot that becomes a labelled disc over work ---------- */
-.cursor{ position:fixed; left:0; top:0; width:16px; height:16px; margin:-8px 0 0 -8px; border-radius:50%; z-index:100; pointer-events:none;
-  display:grid; place-items:center; transition:background .3s, width .5s var(--out), height .5s var(--out), margin .5s var(--out); }
-.cursor::after{ content:attr(data-label); font-family:var(--ui); font-weight:600; font-size:11px; letter-spacing:.12em; text-transform:uppercase; opacity:0; transition:opacity .3s; white-space:nowrap; }
-body[data-tone="dark"] .cursor{ background:var(--orange); color:var(--black); }
-body[data-tone="light"] .cursor, body[data-tone="orange"] .cursor{ background:var(--black); color:var(--beige); }
-/* the dot is the brand star (same shape as next to the name) */
-.cursor{ width:22px; height:22px; margin:-11px 0 0 -11px; border-radius:0;
-  -webkit-mask:var(--star-mask) center / contain no-repeat; mask:var(--star-mask) center / contain no-repeat; }
+/* ---------- cursor: the brand star (same as next to the name); over work it grows and shows a label pill ---------- */
 :root{ --star-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 0 L52.9 43.1 L71.2 28.8 L56.9 47.1 L100 50 L56.9 52.9 L71.2 71.2 L52.9 56.9 L50 100 L47.1 56.9 L28.8 71.2 L43.1 52.9 L0 50 L43.1 47.1 L28.8 28.8 L47.1 43.1 Z'/%3E%3C/svg%3E"); }
+.cursor{ position:fixed; left:0; top:0; width:22px; height:22px; margin:-11px 0 0 -11px; z-index:100; pointer-events:none;
+  transition:width .5s var(--out), height .5s var(--out), margin .5s var(--out); }
+.cursor::before{ content:""; position:absolute; inset:0; background:var(--cur); transition:background .3s, transform .8s var(--out);
+  -webkit-mask:var(--star-mask) center / contain no-repeat; mask:var(--star-mask) center / contain no-repeat; }
+.cursor::after{ content:attr(data-label); position:absolute; left:100%; top:50%; margin-left:6px; transform:translate(-6px,-50%); padding:7px 12px; border-radius:999px;
+  background:var(--cur); color:var(--cur-ink); font-family:var(--ui); font-weight:600; font-size:11px; letter-spacing:.12em; text-transform:uppercase; white-space:nowrap;
+  opacity:0; transition:opacity .3s, transform .4s var(--out); }
+body[data-tone="dark"] .cursor{ --cur:var(--orange); --cur-ink:var(--black); }
+body[data-tone="light"] .cursor, body[data-tone="orange"] .cursor{ --cur:var(--black); --cur-ink:var(--beige); }
 .cursor.big{ width:44px; height:44px; margin:-22px 0 0 -22px; opacity:.9; }
-.cursor.label{ width:84px; height:84px; margin:-42px 0 0 -42px; border-radius:50%; -webkit-mask:none; mask:none; }
-.cursor.label::after{ opacity:1; transition-delay:.12s; }
+.cursor.big::before{ transform:rotate(45deg); }
+.cursor.label{ width:72px; height:72px; margin:-36px 0 0 -36px; }
+.cursor.label::before{ transform:rotate(90deg); }
+.cursor.label::after{ opacity:1; transform:translate(0,-50%); transition-delay:.12s; }
 @media (hover:hover) and (pointer:fine){ body.has-cursor, body.has-cursor a, body.has-cursor button, body.has-cursor .mcard{ cursor:none; } }
 @media (hover:none), (pointer:coarse){ .cursor{ display:none; } }
 
