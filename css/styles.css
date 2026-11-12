@@ -357,6 +357,20 @@ br.m-only{ display:none; }
 .reel p{ margin:0; font-size:14px; opacity:.8; }
 @media (max-width:560px){ .reels{ display:flex; overflow-x:auto; margin:0 calc(var(--pad) * -1); padding:0 var(--pad) 12px; scroll-snap-type:x mandatory; scroll-padding-left:var(--pad); } .reel{ flex:0 0 58vw; scroll-snap-align:start; } }
 
+/* ---------- FEED: account feeds gallery ---------- */
+.feeds{ margin-top:var(--s-4); }
+.feeds-head{ display:flex; justify-content:space-between; align-items:baseline; gap:var(--gut); margin-bottom:var(--s-2); }
+.feeds-note{ font-family:var(--ui); font-size:12.5px; opacity:.6; margin:0; }
+.feeds-track{ display:flex; gap:var(--gut); overflow-x:auto; scroll-snap-type:x mandatory; margin:0 calc(var(--pad) * -1); padding:0 var(--pad) 18px; scroll-padding-left:var(--pad); scrollbar-width:thin; scrollbar-color:var(--black) transparent; }
+.feed{ flex:0 0 clamp(220px, 22vw, 320px); margin:0; scroll-snap-align:start; }
+.feed-shot{ aspect-ratio:3 / 4; overflow:hidden; border-radius:14px; background:#fff; box-shadow:0 16px 34px rgba(21,19,20,.16); }
+.feed-shot img{ width:100%; height:100%; object-fit:cover; object-position:top; display:block; transition:transform 1.2s var(--out); }
+.feed:hover .feed-shot img{ transform:scale(1.03); }
+.feed figcaption{ display:flex; flex-direction:column; gap:2px; margin-top:var(--s-1); font-family:var(--ui); }
+.feed figcaption b{ font-weight:600; font-size:15.5px; }
+.feed figcaption span{ font-size:13px; opacity:.6; }
+@media (max-width:560px){ .feed{ flex-basis:68vw; } }
+
 /* ---------- motion ---------- */
 .motion .intro{ max-width:44ch; margin-bottom:var(--s-3); }
 .hint-touch{ display:none; }
