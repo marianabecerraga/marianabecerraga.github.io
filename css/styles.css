@@ -164,8 +164,12 @@ body[data-tone="light"] .dots a.active::before, body[data-tone="orange"] .dots a
 .cursor::after{ content:attr(data-label); font-family:var(--ui); font-weight:600; font-size:11px; letter-spacing:.12em; text-transform:uppercase; opacity:0; transition:opacity .3s; white-space:nowrap; }
 body[data-tone="dark"] .cursor{ background:var(--orange); color:var(--black); }
 body[data-tone="light"] .cursor, body[data-tone="orange"] .cursor{ background:var(--black); color:var(--beige); }
+/* the dot is the brand star (same shape as next to the name) */
+.cursor{ width:22px; height:22px; margin:-11px 0 0 -11px; border-radius:0;
+  -webkit-mask:var(--star-mask) center / contain no-repeat; mask:var(--star-mask) center / contain no-repeat; }
+:root{ --star-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 0 L52.9 43.1 L71.2 28.8 L56.9 47.1 L100 50 L56.9 52.9 L71.2 71.2 L52.9 56.9 L50 100 L47.1 56.9 L28.8 71.2 L43.1 52.9 L0 50 L43.1 47.1 L28.8 28.8 L47.1 43.1 Z'/%3E%3C/svg%3E"); }
 .cursor.big{ width:44px; height:44px; margin:-22px 0 0 -22px; opacity:.9; }
-.cursor.label{ width:84px; height:84px; margin:-42px 0 0 -42px; }
+.cursor.label{ width:84px; height:84px; margin:-42px 0 0 -42px; border-radius:50%; -webkit-mask:none; mask:none; }
 .cursor.label::after{ opacity:1; transition-delay:.12s; }
 @media (hover:hover) and (pointer:fine){ body.has-cursor, body.has-cursor a, body.has-cursor button, body.has-cursor .mcard{ cursor:none; } }
 @media (hover:none), (pointer:coarse){ .cursor{ display:none; } }
