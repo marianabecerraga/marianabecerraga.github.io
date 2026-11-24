@@ -46,6 +46,7 @@
     })();
     document.querySelectorAll('.card').forEach(function (el) { el.setAttribute('data-cursor', 'View'); });
     document.querySelectorAll('.mcard').forEach(function (el) { el.setAttribute('data-cursor', 'Expand'); });
+    document.querySelectorAll('.ai figure:not(.is-video) .ai-shot').forEach(function (el) { el.setAttribute('data-cursor', 'View'); });
     document.querySelectorAll('a, button, [data-cursor]').forEach(function (el) {
       el.addEventListener('mouseenter', function () {
         var label = el.getAttribute('data-cursor');
@@ -230,6 +231,9 @@
     mark('.roles > div, .about-text > .k, .about-text > .meta, .about-text > .btn, .contact .actions, .foot', 'rv', 0.07);
     mark('.p-media .row > figure, .plate .fig, .live-frame', 'rvi', 0.12);
     mark('.about-photo, .home-photo', 'rv', 0);
+    mark('.ai-intro-text > p, .ai-rules li, .ai-case-head > *, .ai-badge, .ai-rights', 'rv', 0.08);
+    mark('.ai-slide, .ai-col > figure', 'rv', 0.1);
+    document.querySelectorAll('.ai-collage > figure').forEach(function (f) { f.classList.add('rv', 'reveal-target'); });
     home.querySelector('.home-photo').style.setProperty('--d', '.7s');
 
     /* clipped images are watched through their (unclipped) parent:
@@ -253,6 +257,9 @@
     var stage = Array.prototype.slice.call(panels);
     var drifting = Array.prototype.slice.call(document.querySelectorAll('.p-media .row > figure, .plate .fig'));
     var midReel = document.querySelector('.reel:nth-child(2) .phone');
+    /* AI collage: each piece floats at its own speed (--sp), like a pinned scrapbook */
+    var floaters = Array.prototype.slice.call(document.querySelectorAll('.ai-collage > figure, .ai-col'));
+    var wide = window.matchMedia('(min-width: 981px)');
     var bgs = stage.map(function (p) { return getComputedStyle(p).backgroundColor; });
     var ticking = false;
     function frame() {
@@ -279,6 +286,13 @@
         var img = f.querySelector('img');
         if (img) img.style.setProperty('--py', (Math.max(-1, Math.min(1, prog)) * r.height * -0.018).toFixed(1) + 'px');
       });
+      floaters.forEach(function (f) {
+        var r = f.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > vh + 200) return;
+        var sp = parseFloat(f.style.getPropertyValue('--sp')) || (f.classList.contains('ai-col') ? [0.15, -0.2, 0.25][Array.prototype.indexOf.call(f.parentNode.children, f)] : 0);
+        var dy = wide.matches ? ((r.top + r.height / 2) / vh - 0.5) * sp * -120 : 0;
+        f.style.setProperty('--dy', dy.toFixed(1) + 'px');
+      });
       if (midReel) {
         var rr = midReel.getBoundingClientRect();
         if (rr.bottom > 0 && rr.top < vh) midReel.style.setProperty('--rp', (((rr.top + rr.height / 2) / vh - 0.5) * -60).toFixed(1) + 'px');
@@ -289,7 +303,25 @@
     frame();
   }
 
-  /* ---------- 7. Mobile menu ---------- */
+  /* ---------- 7. AI lightbox: click a still to see it whole ---------- */
+  var lb = document.createElement('div');
+  lb.className = 'ai-lb'; lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', 'Image viewer');
+  lb.innerHTML = '<img alt=""><button type="button">Close</button>';
+  body.appendChild(lb);
+  var lbImg = lb.querySelector('img'), lbBtn = lb.querySelector('button'), lastFocus = null;
+  function closeLb() { lb.classList.remove('open'); body.style.overflow = ''; if (lastFocus) lastFocus.focus(); }
+  document.querySelectorAll('.ai figure:not(.is-video) .ai-shot').forEach(function (shot) {
+    var img = shot.querySelector('img');
+    shot.setAttribute('tabindex', '0'); shot.setAttribute('role', 'button');
+    shot.setAttribute('aria-label', 'Open image: ' + img.alt);
+    function open() { lastFocus = shot; lbImg.src = img.currentSrc || img.src; lbImg.alt = img.alt; lb.classList.add('open'); body.style.overflow = 'hidden'; lbBtn.focus(); }
+    shot.addEventListener('click', open);
+    shot.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+  });
+  lb.addEventListener('click', function (e) { if (e.target !== lbImg) closeLb(); });
+  addEventListener('keydown', function (e) { if (e.key === 'Escape' && lb.classList.contains('open')) closeLb(); });
+
+  /* ---------- 8. Mobile menu ---------- */
   var menuBtn = document.querySelector('.menu-btn');
   var mobileNav = document.getElementById('mobileNav');
   function setMenu(open) {
